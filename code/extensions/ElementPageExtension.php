@@ -308,6 +308,14 @@ class ElementPageExtension extends DataExtension
     }
 
     /**
+     * Handle different publish method being called by versioned pages
+     */
+    public function onAfterVersionedPublish()
+    {
+      $this->onAfterPublish();
+    }
+
+    /**
      * Publish
      */
     public function onAfterPublish()
