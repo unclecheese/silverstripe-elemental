@@ -15,14 +15,8 @@
 		"silverstripe/cms": "^4.0",
 		"symbiote/silverstripe-gridfieldextensions": "dev-master",
 		"arillo/silverstripe-dataobject-preview": "*",
-		"dnadesign/migraterelations": "*"
+		"dnadesign/migraterelations": "dev-master"
 	},
-	"repositories": [
-		{
-			"type": "git",
-			"url": "https://github.com/dnadesign/silverstripe-migraterelations.git"
-		}
-	],
 	"suggest": {
 		"bluehousegroup/silverstripe-data-object-version-viewer": "Allows viewing of version history for data objects inside of the SilverStripe CMS",
 		"dnadesign/silverstripe-elemental-subsites": "Adds subsite support to elemental",
