@@ -451,9 +451,9 @@ class BaseElement extends Widget implements CMSPreviewable
         return (Controller::has_curr()) ? Controller::curr() : null;
     }
 
-    public function getPage()
+    public function getPage($edit = false)
     {
-        if ($this->virtualOwner) {
+        if ($this->virtualOwner && !$edit) {
             return $this->virtualOwner->getPage();
         }
 
@@ -525,7 +525,7 @@ class BaseElement extends Widget implements CMSPreviewable
 
         $link = Controller::join_links(
             singleton('CMSPageEditController')->Link('EditForm'),
-            $this->getPage()->ID,
+            $this->getPage(true)->ID,
             'field/ElementArea/item/',
             $this->ID
         );
