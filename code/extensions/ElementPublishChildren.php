@@ -14,12 +14,14 @@ class ElementPublishChildren extends DataExtension
             foreach($config->publishable_items as $item) {
                 $objects = $this->owner->$item();
 
-                if($objects instanceof ManyManyList || $objects instanceof HasManyList) {
-                    foreach($objects as $object) {
-                        $items->push($object);
+                if ($objects && $objects->exists()) {
+                    if($objects instanceof ManyManyList || $objects instanceof HasManyList) {
+                        foreach($objects as $object) {
+                            $items->push($object);
+                        }
+                    } else {
+                        $items->push($objects);
                     }
-                } else {
-                    $items->push($objects);
                 }
             }
         }
