@@ -17,12 +17,12 @@ class RemoveOrphanedElements extends BuildTask
                 $elementArea->delete();
             }
         }
-        echo 'Found ' . $deleteCount . ' areas no longer used';
+        echo 'Found ' . $deleteCount . ' areas no longer used' . '<br>';
 
         $bogusNoAreas = BaseElement::get()
             ->leftJoin('WidgetArea', 'ea.ID = Widget.ParentID', 'ea')
             ->where('ea.ID IS NULL and BaseElement.ListID = 0');
-        echo 'Found ' . $bogusNoAreas->Count() . ' bogus areas';
+        echo 'Found ' . $bogusNoAreas->Count() . ' bogus areas' . '<br>';
         foreach($bogusNoAreas as $bogus) {
             $bogus->delete();
         }
@@ -30,9 +30,9 @@ class RemoveOrphanedElements extends BuildTask
         $bogusNoLists = BaseElement::get()
             ->leftJoin('ElementList', 'el.ID = BaseElement.ListID', 'el')
             ->where('el.ID IS NULL and BaseElement.ListID > 0');
-        echo 'Found ' . $bogusNoLists->Count() . ' bogus lists';
+        echo 'Found ' . $bogusNoLists->Count() . ' bogus lists' . '<br>';
         foreach($bogusNoLists as $bogus) {
-            echo $bogus->ListID;
+            echo $bogus->ListID . '<br>';
             // $bogus->delete();
         }
     }

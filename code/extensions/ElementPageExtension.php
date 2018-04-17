@@ -233,7 +233,35 @@ class ElementPageExtension extends DataExtension
     public function onBeforeDelete() {
         if(Versioned::get_reading_mode() == 'Stage.Stage') {
             $area = $this->owner->ElementArea();
-            $area->delete();
+
+            foreach ($area->Widgets() as $element) {
+                $firstVirtual = false;
+                if ($element->getPublishedVirtualLinkedElements()->Count() > 0) {
+                    // choose the first one
+                    $firstVirtual = $element->getPublishedVirtualLinkedElements()->First();
+                    $wasPublished = true;
+                } else if ($element->getVirtualLinkedElements()->Count() > 0) {
+                    // choose the first one
+                    $firstVirtual = $element->getVirtualLinkedElements()->First();
+                    $wasPublished = false;
+                }
+                if ($firstVirtual) {
+                    $origParentID = $element->ParentID;
+                    $origSort = $element->Sort;
+                    // change element to first's values
+                    $element->ParentID = $firstVirtual->ParentID;
+                    $element->Sort = $firstVirtual->Sort;
+                    $firstVirtual->ParentID = $origParentID;
+                    $firstVirtual->Sort = $origSort;
+                    // write
+                    $element->write();
+                    $firstVirtual->write();
+                    if ($wasPublished) {
+                        $element->doPublish();
+                        $firstVirtual->doPublish();
+                    }
+                }
+            }
         }
     }
 
