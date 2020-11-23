@@ -73,7 +73,7 @@ script:
   - if [[ $NPM_TEST ]]; then git diff --name-status --relative=client; fi
   - if [[ $NPM_TEST ]]; then yarn run test; fi
   - if [[ $NPM_TEST ]]; then yarn run lint; fi
-  - if [[ $BEHAT_TEST ]]; then vendor/bin/behat @silverstripe-elemental; fi
+  - if [[ $BEHAT_TEST ]]; then vendor/bin/behat @silverstripe-elemental --stop-on-failure; fi
 
 after_success:
   - if [[ $PHPUNIT_COVERAGE_TEST ]]; then bash <(curl -s https://codecov.io/bash) -f coverage.xml; fi
